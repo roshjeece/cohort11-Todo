@@ -16,7 +16,8 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+// JOURNAL NOTE: @WebMvcTest is instantiating (without integrating) an instance of CategoryController
+// You need to do @WebMvcTest([CLASS].class), where class is NOT the test
 @WebMvcTest(CategoryController.class)
 class CategoryControllerTest {
 
