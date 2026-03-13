@@ -1,10 +1,12 @@
 package mil.t2com.moda.todo.task;
 
 import mil.t2com.moda.todo.category.Category;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,14 +24,14 @@ class TaskServiceTest {
     // Start using when refactoring
 //    @BeforeEach
 //    void setUp() {
-////        MockitoAnnotations.openMocks(this);
+//        MockitoAnnotations.openMocks(this);
 //    }
 
     @Test
     void shouldSaveNewTask() {
         // Arrange
         Category newCategory = new Category("important");
-        Task newTask = new Task("Learn about Mocks", "Learn about Inject mocks", false, newCategory);
+        Task newTask = new Task("Learn about MOCKS", "Learn about Inject mocks", false, newCategory);
         newTask.setId(1L);
 
         // Act
@@ -40,7 +42,7 @@ class TaskServiceTest {
         // Assert
         assertThat(result.getId()).isEqualTo(1L);
         assertThat(result.getTitle()).isEqualTo("Learn about MOCKS");
-        assertThat(result.getCategory()).isEqualTo("label");
+        assertThat(result.getCategory().getLabel()).isEqualTo("important");
 
         verify(taskRepository, only()).save(newTask);
     }
