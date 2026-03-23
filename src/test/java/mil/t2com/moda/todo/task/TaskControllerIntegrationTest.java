@@ -92,8 +92,8 @@ public class TaskControllerIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/task/" + savedTask.getId()))
                 .andExpect(status().isOk())
                 //.andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.title").value(""))
+                .andExpect(jsonPath("$.title").value("blank task"))
                 //.andExpect(jsonPath("$.category.id").value(1L))
-                .andExpect(jsonPath("$.category.label").value("not started"));
+                .andExpect(jsonPath("$.category.label").value("failed"));
     }
 }

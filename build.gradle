@@ -24,13 +24,21 @@ dependencies {
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'org.flywaydb:flyway-database-postgresql'
 	implementation 'org.springframework.boot:spring-boot-starter-flyway'
+	implementation 'org.apache.commons:commons-text:1.13.0'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.data:spring-data-rest-webmvc'
+	runtimeOnly 'org.springframework.boot:spring-boot-docker-compose'
+	runtimeOnly 'org.postgresql:postgresql'
+
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testRuntimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
-	runtimeOnly 'org.springframework.boot:spring-boot-docker-compose'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	runtimeOnly 'org.postgresql:postgresql'
-	testRuntimeOnly 'com.h2database:h2'
 	testImplementation 'org.mockito:mockito-inline:5.2.0'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 }
 
 tasks.named('test') {

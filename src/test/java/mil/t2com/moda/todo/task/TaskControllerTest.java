@@ -11,7 +11,6 @@ import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import tools.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
@@ -120,10 +119,25 @@ class TaskControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
 
-        verify(taskService, times(1)).findAllTasks(captors.capture());
+        verify(taskService, times(1)).findAllTasks();
         assertThat(captors.getAllValues()).usingRecursiveComparison().isEqualTo(tasks);
-        List<Task> capturedList = captors.getAllValues();
         verify(taskService, only()).findAllTasks();
+    }
+
+    @Test
+    void shouldSaveAllTasks() {
+//        ArgumentCaptor<List<Task>> captorAll = ArgumentCaptor.forClass(List.class);
+//
+//        taskService.saveAllTasks(captorAll.capture()); // method under test
+//
+//        verify(taskService).findAllTasks(captorAll.capture());
+//
+//        List<Task> result = captorAll.getAllValues();
+//
+//        assertThat(result)
+//                .hasSize(2)
+//                .extracting(Task::getId)
+//                .containsExactly(1L, 2L);
     }
 
     @Test

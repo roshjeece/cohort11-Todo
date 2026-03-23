@@ -34,7 +34,12 @@ public class TaskService {
     }
 
     public Task findTaskById(Long id) {
-            return taskRepository.findById(id).orElseThrow();
+        return taskRepository.findById(id).orElseThrow();
     }
+
+    public List<Task> saveAllTasks(List<Task> tasks) {
+        return taskRepository.saveAll(tasks);
+    }
+
     // ADD with Tests for:  Put, Delete
 }

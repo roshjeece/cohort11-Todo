@@ -95,4 +95,14 @@ class TaskServiceTest {
         assertThat(result).isEqualTo(learnMock);
     }
 
+    @Test
+    void shouldSaveAllTasks() {
+        // Act
+        when(taskRepository.saveAll(tasks)).thenReturn(tasks);
+
+        List<Task> result = taskService.saveAllTasks(tasks);
+
+        verify(taskRepository, only()).saveAll(tasks);
+        assertThat(result).isEqualTo(tasks);
+    }
 }
