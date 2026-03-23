@@ -2,6 +2,7 @@ package mil.t2com.moda.todo.task;
 
 import jakarta.transaction.Transactional;
 import mil.t2com.moda.todo.category.Category;
+import mil.t2com.moda.todo.category.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +34,16 @@ public class TaskControllerIntegrationTest {
     @Autowired
     private TaskService taskService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     // Setup test objects
     Task learnTdd;
     Category started;
 
     @BeforeEach
     void setUp() {
-        started = new Category("started");
+        started = categoryService.saveCategory(new Category("started"));
         learnTdd = new Task( "Learn TDD", "research TDD", false, started);
     }
 
@@ -55,7 +59,7 @@ public class TaskControllerIntegrationTest {
         String expectedType = savedTask.getRequest().getContentType();
         Task expectedTask = objectMapper.readValue(savedTask.getResponse().getContentAsString(), Task.class);
 
-        assertEquals(expectedType, "application/json");
+        assertEquals("application/json", expectedType);
         assertEquals(expectedTask.getTitle(), learnTdd.getTitle()); // Removed "Json" from "learnTdd.getTitle()" to make this work
         assertEquals(expectedTask.getCategory().getLabel(), learnTdd.getCategory().getLabel()); // Removed "Json" from "learnTdd.getTitle()" to make this work
     }
@@ -80,13 +84,11 @@ public class TaskControllerIntegrationTest {
 
     @Test
     public void shouldGetTaskById() throws Exception {
-        Task savedTask = taskService.saveTask(new Task("blank task", "no description", false, new Category("failed")));
+        Task savedTask = taskService.saveTask(new Task("blank task", "no description", false, started));
 
         mockMvc.perform(get("/api/v1/task/" + savedTask.getId()))
                 .andExpect(status().isOk())
-                //.andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.title").value(""))
-                //.andExpect(jsonPath("$.category.id").value(1L))
-                .andExpect(jsonPath("$.category.label").value("not started"));
+                .andExpect(jsonPath("$.title").value("blank task"))
+                .andExpect(jsonPath("$.category.label").value("started"));
     }
 }
