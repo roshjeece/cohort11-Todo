@@ -9,9 +9,12 @@ export const TaskItem = ({initialTask}: TaskProps) => {
 
     return (
 
-            <li aria-label="Task 1">
-                {`${initialTask.title}`}{`${initialTask.description}`}
-            </li>
+        <li className="dark:p-2"
+            aria-label={initialTask.title}
+            id={initialTask.id}>
+            {`${initialTask.title}`}
+            {`${initialTask.description}`}
+        </li>
 
     );
 };
