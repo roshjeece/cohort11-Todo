@@ -16,8 +16,13 @@ describe('Task Page', () => {
     vi.mocked(taskApi.axiosGetAllTasks).mockResolvedValue(mockData);
   });
 
-  it('should display task heading', () => {
+  it('should display task heading', async () => {
     render(<TaskPage />);
+
+    await screen.findByText(/First Task/);
+    // findByRole polls the DOM until the element appears (or times out), which gives React time to finish the async
+    // state update triggered by the mocked axiosGetAllTasks. Without await, you'd move to the assertion before the
+    // update completes.
 
     expect(
       screen.getByRole('heading', { name: /Task List/i }),
@@ -27,9 +32,8 @@ describe('Task Page', () => {
   it('should show multiple tasks', async () => {
     render(<TaskPage />);
 
-    // Wait for async data to render
-    const list = await screen.findByRole('list');
-
+    await screen.findByText(/First Task/); // Wait for async data to render
+    const list = screen.getByRole('list');
     const items = within(list).getAllByRole('listitem');
 
     expect(items).toHaveLength(2);
@@ -40,14 +44,16 @@ describe('Task Page', () => {
   it('should show multiple tasks and find the first task', async () => {
     render(<TaskPage />);
 
-    // Wait for async data to render
-    const list = await screen.findByRole('list');
+    await screen.findByText(/First Task/); // Wait for async data to render
+    const list =  screen.getByRole('list');
 
     const items = within(list).getAllByRole('listitem');
 
     expect(items).toHaveLength(2);
 
-    const firstItem = await within(list).findByLabelText('Task 1');
+    const firstItem = within(list).getByLabelText('Task 1');
     expect(firstItem).toBeInTheDocument();
   });
+
+
 });

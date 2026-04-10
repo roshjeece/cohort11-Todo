@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {TaskItem} from './TaskItem.tsx';
 import {axiosGetAllTasks} from './TaskService.ts';
 import type {Task} from './TaskType.ts';
+import TaskForm from "./TaskForm.tsx";
 
 export const TaskPage = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
@@ -22,6 +23,7 @@ export const TaskPage = () => {
     return (
         <>
             <h1>Task List</h1>
+            <TaskForm/>
             <ul>
                 {tasks.length > 0 ? (
                     tasks.map((task) => <TaskItem key={task.id} initialTask={task}/>)
