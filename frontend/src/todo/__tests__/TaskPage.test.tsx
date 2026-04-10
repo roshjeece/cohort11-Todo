@@ -16,11 +16,12 @@ describe('Task Page', () => {
     vi.mocked(taskApi.axiosGetAllTasks).mockResolvedValue(mockData);
   });
 
-  it('should display task heading', () => {
+  it('should display task heading', async () => {
     render(<TaskPage />);
+    await screen.findByRole('list');
 
     expect(
-      screen.getByRole('heading', { name: /Task List/i }),
+    screen.getByRole('heading', { name: /Task List/i }),
     ).toBeInTheDocument();
   });
 
